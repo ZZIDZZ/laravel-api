@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::prefix('uom')->group(function(){
+    Route::get('/', [UomController::class, 'index']);
+    Route::post('/', [UomController::class, 'store']);
+    // Route::put('//edit/{id}', [UomController::class, 'edit']);
+    Route::put('/update/{id}', [UomController::class, 'update']);
+    // Route::get('//add', [UomController::class, 'add']);
+    Route::delete('/delete/{id}', [UomController::class, 'delete']);
+});
+
+Route::prefix('product')->group(function(){
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+    // Route::put('//edit/{id}', [ProductController::class, 'edit']);
+    Route::put('/update/{id}', [ProductController::class, 'update']);
+    // Route::get('//add', [ProductController::class, 'add']);
+    Route::delete('/delete/{id}', [ProductController::class, 'delete']);
 });
