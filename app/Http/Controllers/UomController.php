@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Uom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UomController extends Controller
 {
@@ -14,6 +15,13 @@ class UomController extends Controller
     }
     public function store()
     {
+        $validator = Validator::make(request()->all(), [
+            'uom_code' => 'required|unique:uoms',
+            'uom_name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
         $uom = new Uom();
         $uom->uom_code = request("uom_code", "");
         $uom->uom_name = request("uom_name", "");
@@ -23,6 +31,13 @@ class UomController extends Controller
     public function update($id)
     {
         $uom = Uom::find($id); // select * from where id = ? 
+        $validator = Validator::make(request()->all(), [
+            'uom_code' => 'required|unique:uoms,uom_code,'.$uom->id,
+            'uom_name' => 'required|max:100',
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
         $uom->uom_code = request("uom_code", "");
         $uom->uom_name = request("uom_name", "");
         $uom->save();

@@ -65,18 +65,18 @@ class AuthController extends Controller
             ], 401);
         }
         $email = $request->input('email');
-        $password = $request->input('password');
+        // $password = $request->input('password');
         $user = User::where('email', $email)->first();
         if(!$user){
             return response()->json([
                 'success' => false,
-                'message' => 'email tidak ditemukan',
+                'message' => 'email dan password tidak ditemukan',
             ], 403);
         }
         if(!Auth::attempt($request->only(['email', 'password']))){
             return response()->json([
-                'status' => false,
-                'message' => 'Email & Password does not match with our record.',
+                'success' => false,
+                'message' => 'email dan password tidak ditemukan',
             ], 401);
         }
 
