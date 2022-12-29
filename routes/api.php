@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::prefix('uom')->group(function(){
     Route::get('/', [UomController::class, 'index']);

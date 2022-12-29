@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $products = Product::all();
@@ -21,10 +25,11 @@ class ProductController extends Controller
             'uom_id' => 'required|exists:uoms,id',
             'unit_price' => 'required',
         ]);
- 
+
         if ($validator->fails()) {
             return $validator->errors();
         }
+        
         $product = new Product();
         $product->product_code = request("product_code", "");
         $product->product_name = request("product_name", "");
@@ -36,8 +41,9 @@ class ProductController extends Controller
     }
     public function update($id)
     {
+        $product = Product::find($id);
         $validator = Validator::make(request()->all(), [
-            'product_code' => 'required',
+            'product_code' => 'required|unique:products,product_code,'.$product->id,
             'product_name' => 'required|max:100',
             'uom_id' => 'required|exists:uoms,id',
             'unit_price' => 'required',
@@ -46,7 +52,6 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         }
-        $product = Product::find($id);
         $product->product_code = request("product_code", "");
         $product->product_name = request("product_name", "");
         $product->uom_id = request("uom_id", "");
