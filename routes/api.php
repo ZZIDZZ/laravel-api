@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::prefix('uom')->group(function(){
+Route::middleware('auth:sanctum')->prefix('uom')->group(function(){
     Route::get('/', [UomController::class, 'index']);
     Route::post('/', [UomController::class, 'store']);
     // Route::put('//edit/{id}', [UomController::class, 'edit']);
@@ -33,7 +33,7 @@ Route::prefix('uom')->group(function(){
     Route::delete('/delete/{id}', [UomController::class, 'delete']);
 });
 
-Route::prefix('product')->group(function(){
+Route::middleware('auth:sanctum')->prefix('product')->group(function(){
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
     // Route::put('//edit/{id}', [ProductController::class, 'edit']);
