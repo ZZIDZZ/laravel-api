@@ -57,11 +57,11 @@ class ProductController extends Controller
         // if ($validator->fails()) {
         //     return $validator->errors();
         // }
-        $product->product_code = request("product_code", "");
-        $product->product_name = request("product_name", "");
-        $product->uom_id = request("uom_id", "");
-        $product->description = request("description", "");
-        $product->unit_price = request("unit_price", "");
+        $product->product_code = request("product_code", $product->product_code);
+        $product->product_name = request("product_name", $product->product_name);
+        $product->uom_id = request("uom_id", $product->uom_id);
+        $product->description = request("description", $product->description);
+        $product->unit_price = request("unit_price", $product->unit_price);
         $product->save();
         return $product;
     }
