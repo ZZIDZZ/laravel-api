@@ -80,12 +80,9 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
-
         return response()->json([
-            'status' => true,
-            'message' => 'User Logged In Successfully',
-            'token' => $user->createToken("API TOKEN")->plainTextToken
+            $user,
+            'accessToken' => $user->createToken("API TOKEN")->plainTextToken,
         ], 200);
     }
 }
