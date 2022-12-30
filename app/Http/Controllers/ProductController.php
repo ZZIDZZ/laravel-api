@@ -47,16 +47,16 @@ class ProductController extends Controller
     public function update($id)
     {
         $product = Product::find($id);
-        $validator = Validator::make(request()->all(), [
-            'product_code' => 'required|unique:products,product_code,'.$product->id,
-            'product_name' => 'required|max:100',
-            'uom_id' => 'required|exists:uoms,id',
-            'unit_price' => 'required',
-        ]);
+        // $validator = Validator::make(request()->all(), [
+        //     'product_code' => 'required|unique:products,product_code,'.$product->id,
+        //     'product_name' => 'required|max:100',
+        //     'uom_id' => 'required|exists:uoms,id',
+        //     'unit_price' => 'required',
+        // ]);
  
-        if ($validator->fails()) {
-            return $validator->errors();
-        }
+        // if ($validator->fails()) {
+        //     return $validator->errors();
+        // }
         $product->product_code = request("product_code", "");
         $product->product_name = request("product_name", "");
         $product->uom_id = request("uom_id", "");
