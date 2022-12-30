@@ -24,6 +24,7 @@ jobs:
             --exclude .git/ \
             --exclude .github/ \
             --exclude .env \
+            --exclude vendor/ \
             ./ ${{env.dest}}
       - name: install packages
         uses: appleboy/ssh-action@master
