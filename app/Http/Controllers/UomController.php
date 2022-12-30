@@ -13,6 +13,15 @@ class UomController extends Controller
         $uoms = Uom::all();
         return $uoms;
     }
+    public function show($id){
+        $uom = Uom::find($id);
+        if($uom) return $uom;
+        else{
+            return response()->json([
+                'message' => 'uom not found',
+            ], 404);
+        }
+    }
     public function store()
     {
         $validator = Validator::make(request()->all(), [

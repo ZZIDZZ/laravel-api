@@ -26,6 +26,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::prefix('uom')->group(function(){
     Route::get('/', [UomController::class, 'index']);
+    Route::get('/{id}', [UomController::class, 'show']);
     Route::post('/', [UomController::class, 'store']);
     // Route::put('//edit/{id}', [UomController::class, 'edit']);
     Route::put('/update/{id}', [UomController::class, 'update']);
@@ -35,6 +36,7 @@ Route::prefix('uom')->group(function(){
 
 Route::prefix('product')->group(function(){
     Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class, 'show']);
     Route::post('/', [ProductController::class, 'store']);
     // Route::put('//edit/{id}', [ProductController::class, 'edit']);
     Route::put('/update/{id}', [ProductController::class, 'update']);

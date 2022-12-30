@@ -13,6 +13,15 @@ class ProductController extends Controller
         $products = Product::all();
         return $products;
     }
+    public function show($id){
+        $product = Product::find($id);
+        if($product) return $product;
+        else{
+            return response()->json([
+                'message' => 'product not found',
+            ], 404);
+        }
+    }
     public function store()
     {
         $validator = Validator::make(request()->all(), [
