@@ -10,6 +10,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: setup permission
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            cd /home/${{ secrets.SSH_USER }}/laravel-api.zzidzz.tech
+            chmod -R 777 storage
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sync
@@ -24,6 +34,7 @@ jobs:
             --exclude .git/ \
             --exclude .github/ \
             --exclude .env \
+            --exclude vendor/ \
             ./ ${{env.dest}}
       - name: install packages
         uses: appleboy/ssh-action@master
@@ -36,3 +47,5 @@ jobs:
             cd /home/${{ secrets.SSH_USER }}/laravel-api.zzidzz.tech
             composer install
             php artisan migrate
+            sudo chown -R $USER:www-data storage
+            chmod -R 775 storage
